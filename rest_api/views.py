@@ -1,6 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import viewsets
+
 
 from rest_api import serializers
 
@@ -29,7 +31,7 @@ class HelloApiView(APIView):
         print(request)
         """Create a hello message with our name"""
         serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(): 
             name=serializer.validated_data.get('name')
             message = f'Hello {name}'
             return Response({'message':message})
@@ -52,3 +54,13 @@ class HelloApiView(APIView):
         return Response({'method':'DELETE'})
         
 
+class HelloViewSet(viewsets.ViewSet):
+    """Test API ViewSet"""
+    def list(self,request):
+        a_viewset = [
+            'Uses actions(list,create,retrieve,update,partial_update)',
+            'Automatically maps to URLs using Routers',
+            'Provides more fuctionality with less code',
+        ]
+        return Response({'message':'Hello!','a_viewset':a_viewset})
+        
